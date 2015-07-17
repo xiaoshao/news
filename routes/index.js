@@ -4,31 +4,10 @@ var path = require('path');
 var router = express.Router();
 var gather = require('../gather');
 /* GET home page. */
-router.get('/doGather/:url/:dir', function (req, res, next) {
-
-    var url = req.params.url;
-    var dir = req.params.dir;
-
-    gather("http://" + url, dir, function () {
-        res.send("gather successful")
-    });
-});
-
-router.get('/gather', function (req, res, next) {
-    res.render('gather',
-        {
-            "title": "gahter news",
-            "sites": [
-                {"title": "网易", url: "/doGather/news.163.com/163"}
-            ]
-        });
-});
-
 router.get('/', function (req, res, next) {
-
-    var newsInfo = fs.readFileSync(path.join(__dirname, "../news/20150717/163.json"));
-
-    res.render('index', {title: '小邵新闻 xiaoshao news', news: JSON.parse(newsInfo.toString())})
+    gather("http://news.163.com", function(data){
+        res.render('index', {title: '小邵新闻 xiaoshao news', news: data});
+    });
 });
 
 router.get('/news/:id', function (req, resp, next) {

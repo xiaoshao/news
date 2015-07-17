@@ -9,26 +9,14 @@ var bufferHelper = new BufferHelper();
 var Iconv = require('iconv').Iconv;
 var uuid = require('node-uuid');
 
-module.exports = function (url, dir, callback) {
-    getAllNewsLink(url)
-        //.then(_.partial(_.filter, _, function (newsLink) {
-        //    return newsLink.indexOf(".html") > -1;
-        //}))
-        //.then(function (links) {
-        //    return Q.all(_.map(links, function (newsLink) {
-        //            return analyzeNewsUrl(newsLink);
-        //        })
-        //    );
-        //})
+module.exports = function (url, callback) {
+    return getAllNewsLink(url)
         .then(function (data) {
-            fs.mkdirSync(path.join(__dirname, dir));
-            fs.writeFileSync(path.join(__dirname, dir, "163.json"), JSON.stringify(data), {"encoding": "utf-8"});
-        }).done(function () {
-            callback();
+           console.log(JSON.stringify(data));
+            return JSON.stringify(data);
+        }).done(function(data){
+            callback(data);
         });
-//}("http://news.163.com", "news/20150717", function () {
-//    console.log("done");
-//});
 };
 
 function getAllNewsLink(url) {
