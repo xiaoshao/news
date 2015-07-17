@@ -1,6 +1,6 @@
 extends layout
 
 block content
-  h1= news.title
-  p #{news.contents}
-  p #{news.images}
+  h1= title
+
+  iframe(src=url width='100%' height='600px')
